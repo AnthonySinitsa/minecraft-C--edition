@@ -20,4 +20,4 @@ include_directories(include/GLFW)
 include_directories(include/GLAD) # Add this line for GLAD
 
 # Link against GLFW and other libraries you might need
-target_link_libraries(MinecraftClone glfw3)
+target_link_libraries(MinecraftClone glfw dl)
