@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include "InputManager.h"
 
 int main() {
     // Initialize GLFW
@@ -33,6 +34,10 @@ int main() {
 
     // Set the viewport
     glViewport(0, 0, 800, 600);
+
+    glfwSetKeyCallback(window, InputManager::keyCallback);
+    glfwSetCursorPosCallback(window, InputManager::cursorPositionCallback);
+    glfwSetMouseButtonCallback(window, InputManager::mouseButtonCallback);
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
