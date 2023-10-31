@@ -35,9 +35,10 @@ int main() {
     // Set the viewport
     glViewport(0, 0, 800, 600);
 
-    glfwSetKeyCallback(window, InputManager::keyCallback);
-    glfwSetCursorPosCallback(window, InputManager::cursorPositionCallback);
-    glfwSetMouseButtonCallback(window, InputManager::mouseButtonCallback);
+    glfwSetKeyCallback(window, MinecraftClone::Input::keyCallback);
+    glfwSetCursorPosCallback(window, MinecraftClone::Input::mouseCallback);
+    glfwSetMouseButtonCallback(window, MinecraftClone::Input::mouseButtonCallback);
+    glfwSetScrollCallback(window, MinecraftClone::Input::mouseScrollCallback);
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {

@@ -1,26 +1,45 @@
 #include "InputManager.h"
 #include <iostream>
 
-void InputManager::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    // Handle keyboard input
-    if (action == GLFW_PRESS) {
-        switch (key) {
-            case GLFW_KEY_ESCAPE:
-                glfwSetWindowShouldClose(window, true);
-                break;
-            // Handle other keys here
+namespace MinecraftClone {
+    namespace Input {
+
+        // Define static arrays for key and mouse button states
+        bool keyPressedData[GLFW_KEY_LAST] = {};
+        bool mouseButtonPressedData[GLFW_MOUSE_BUTTON_LAST] = {};
+        float mouseX = 0.0f;
+        float mouseY = 0.0f;
+        float mouseScrollX = 0.0f;
+        float mouseScrollY = 0.0f;
+
+        void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+            if (key >= 0 && key < GLFW_KEY_LAST) {
+                keyPressedData[key] = action != GLFW_RELEASE;
+            }
         }
-    }
-}
 
-void InputManager::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
-    // Handle mouse movement
-    // std::cout << "Mouse Position: (" << xpos << ", " << ypos << ")\n";
-}
+        void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+            mouseX = static_cast<float>(xpos);
+            mouseY = static_cast<float>(ypos);
+        }
 
-void InputManager::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    // Handle mouse button input
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        // std::cout << "Left mouse button pressed\n";
+        void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+            if (button >= 0 && button < GLFW_MOUSE_BUTTON_LAST) {
+                mouseButtonPressedData[button] = action != GLFW_RELEASE;
+            }
+        }
+
+        void mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+            mouseScrollX += static_cast<float>(xoffset);
+            mouseScrollY += static_cast<float>(yoffset);
+        }
+
+        bool isKeyDown(int key) {
+            return key >= 0 && key < GLFW_KEY_LAST && keyPressedData[key];
+        }
+
+        bool isMouseButtonDown(int mouseButton) {
+            return mouseButton >= 0 && mouseButton < GLFW_MOUSE_BUTTON_LAST && mouseButtonPressedData[mouseButton];
+        }
     }
 }
