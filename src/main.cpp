@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -9,6 +10,16 @@ int main() {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
+
+    // Enumerate monitors
+    int monitorCount;
+    GLFWmonitor* monitors = glfwGetMonitors(&monitorCount);
+    if(!monitors){
+        std::cerr << "Failed to get monitors" << std::endl;
+        return -1;
+    }
+
+    std::cout << "Found " << monitorCount << " monitors" << std::endl;
 
     // Get primary monitor
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
