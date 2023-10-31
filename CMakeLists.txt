@@ -11,13 +11,13 @@ add_executable(MinecraftClone
     src/Camera/Camera.cpp
     src/Renderer/Renderer.cpp
     # ... other source files ...
-    src/glad.c  # Add this line for GLAD
+    src/glad.c
 )
 
 # Include directories
 include_directories(include)
 include_directories(include/GLFW)
-include_directories(include/GLAD) # Add this line for GLAD
+include_directories(include/GLAD)
 
 # Link against GLFW and other libraries you might need
 target_link_libraries(MinecraftClone glfw dl)
