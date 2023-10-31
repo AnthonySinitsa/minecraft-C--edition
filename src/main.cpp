@@ -42,11 +42,22 @@ int main() {
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
+        // Handle key press
+        if (MinecraftClone::Input::isKeyDown(GLFW_KEY_W)) {
+            std::cout << "Key W is being pressed." << std::endl;
+            // Additional handling for W key press
+        }
+
+        // Handle mouse button press
+        if (MinecraftClone::Input::isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+            std::cout << "Left mouse button is being pressed." << std::endl;
+            // Additional handling for left mouse button press
+        }
+
         // Render here
 
         // Swap front and back buffers
         glfwSwapBuffers(window);
-
         // Poll for and process events
         glfwPollEvents();
     }
