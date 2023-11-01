@@ -35,17 +35,29 @@ int main() {
     // Set the viewport
     glViewport(0, 0, 800, 600);
 
-    glfwSetKeyCallback(window, InputManager::keyCallback);
-    glfwSetCursorPosCallback(window, InputManager::cursorPositionCallback);
-    glfwSetMouseButtonCallback(window, InputManager::mouseButtonCallback);
+    glfwSetKeyCallback(window, MinecraftClone::Input::keyCallback);
+    glfwSetCursorPosCallback(window, MinecraftClone::Input::mouseCallback);
+    glfwSetMouseButtonCallback(window, MinecraftClone::Input::mouseButtonCallback);
+    glfwSetScrollCallback(window, MinecraftClone::Input::mouseScrollCallback);
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
+        // Handle key press
+        if (MinecraftClone::Input::isKeyDown(GLFW_KEY_W)) {
+            std::cout << "Key W is being pressed." << std::endl;
+            // Additional handling for W key press
+        }
+
+        // Handle mouse button press
+        if (MinecraftClone::Input::isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+            std::cout << "Left mouse button is being pressed." << std::endl;
+            // Additional handling for left mouse button press
+        }
+
         // Render here
 
         // Swap front and back buffers
         glfwSwapBuffers(window);
-
         // Poll for and process events
         glfwPollEvents();
     }
