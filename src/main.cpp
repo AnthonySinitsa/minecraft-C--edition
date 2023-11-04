@@ -4,6 +4,12 @@
 #include <GLFW/glfw3.h>
 #include "InputManager.h"
 
+using namespace MinecraftClone::Input;
+
+const int windowWidth = 1920;
+const int windowHeight = 1080;
+const char* windowTitle = "Minecraft Clone";
+
 int main() {
     // Initialize GLFW
     if (!glfwInit()) {
