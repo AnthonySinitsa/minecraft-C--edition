@@ -11,6 +11,7 @@ add_executable(MinecraftClone
     src/Camera/Camera.cpp
     src/Renderer/Renderer.cpp
     src/InputManager/InputManager.cpp
+    src/Window/Window.cpp
     # ... other source files ...
     src/glad.c
 )

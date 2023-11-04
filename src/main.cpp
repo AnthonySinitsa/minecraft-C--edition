@@ -1,67 +1,88 @@
 #include <iostream>
-#include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
+#include "Window.h"
 #include "InputManager.h"
 
+using namespace MinecraftClone::Input;
+
+const int windowWidth = 1920;
+const int windowHeight = 1080;
+const char* windowTitle = "Minecraft Clone";
+
+void error_callback(int error, const char* description){
+    fprintf(stderr, "Error: %s\n", description);
+}
+
+// Define testWindowCreation function
+void testWindowCreation(MinecraftClone::Window& window) {
+    if (isKeyDown(GLFW_KEY_F1)) {
+        bool isFullScreen = window.isFullScreen();
+        window.setFullScreen(!isFullScreen); // Toggle fullscreen
+    }
+
+    if (mouseX > 50) {
+        std::cout << "Mouse position is greater than 50." << std::endl;
+    }
+
+    if (isKeyDown(GLFW_KEY_ESCAPE)) {
+        window.close();
+    }
+}
+
 int main() {
+    glfwSetErrorCallback(error_callback);
+
     // Initialize GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
 
-    // Create a windowed mode window and its OpenGL context
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Minecraft Clone", NULL, NULL);
-    if (!window) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+    // Use your custom Window class to create a window
+    MinecraftClone::Window* myWindow = MinecraftClone::Window::createWindow(windowWidth, windowHeight, windowTitle);
+    if (!myWindow) {
+        std::cerr << "Failed to create window using Window class" << std::endl;
         glfwTerminate();
         return -1;
     }
 
     // Make the window's context current
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(myWindow->nativeWindow);
 
     // Load all OpenGL function pointers using GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
+        MinecraftClone::Window::freeWindow(myWindow);
+        glfwTerminate();
         return -1;
     }
 
     // Set the viewport
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, windowWidth, windowHeight);
 
-    glfwSetKeyCallback(window, MinecraftClone::Input::keyCallback);
-    glfwSetCursorPosCallback(window, MinecraftClone::Input::mouseCallback);
-    glfwSetMouseButtonCallback(window, MinecraftClone::Input::mouseButtonCallback);
-    glfwSetScrollCallback(window, MinecraftClone::Input::mouseScrollCallback);
+    // Install callbacks using your Window class
+    myWindow->installMainCallbacks();
 
     // Main loop
-    while (!glfwWindowShouldClose(window)) {
-        // Handle key press
-        if (MinecraftClone::Input::isKeyDown(GLFW_KEY_W)) {
-            std::cout << "Key W is being pressed." << std::endl;
-            // Additional handling for W key press
-        }
+    while (!glfwWindowShouldClose(myWindow->nativeWindow)) {
+        // Clear buffer
+        glClearColor(0.98f, 0.47f, 0.43f, 1.0f); // Soft red color
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        // Handle mouse button press
-        if (MinecraftClone::Input::isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-            std::cout << "Left mouse button is being pressed." << std::endl;
-            // Additional handling for left mouse button press
-        }
-
-        // Render here
+        // Call your test function with the instance of the Window class
+        testWindowCreation(*myWindow);
 
         // Swap front and back buffers
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(myWindow->nativeWindow);
+
         // Poll for and process events
         glfwPollEvents();
     }
 
-    glfwTerminate(); // Clean up and close the application
+    // Clean up
+    MinecraftClone::Window::freeWindow(myWindow);
+    glfwTerminate();
     return 0;
 }
