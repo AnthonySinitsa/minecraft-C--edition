@@ -11,6 +11,10 @@ const int windowWidth = 1920;
 const int windowHeight = 1080;
 const char* windowTitle = "Minecraft Clone";
 
+void error_callback(int error, const char* description){
+    fprintf(stderr, "Error: %s\n", description);
+}
+
 // Define testWindowCreation function
 void testWindowCreation(MinecraftClone::Window& window) {
     if (isKeyDown(GLFW_KEY_F1)) {
