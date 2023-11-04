@@ -32,6 +32,8 @@ void testWindowCreation(MinecraftClone::Window& window) {
 }
 
 int main() {
+    glfwSetErrorCallback(error_callback);
+
     // Initialize GLFW
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
