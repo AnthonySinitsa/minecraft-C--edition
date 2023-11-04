@@ -1,6 +1,6 @@
 #include <iostream>
-#include "./include/Window.h"
-#include "./include/InputManager.h"
+#include "Window.h"
+#include "InputManager.h"
 
 namespace MinecraftClone
 {

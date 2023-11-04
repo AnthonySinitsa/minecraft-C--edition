@@ -15,7 +15,7 @@ namespace MinecraftClone
 		void close();
 
     bool isFullScreen();
-    void setFullScreen(bool fs);
+    void setFullScreen(bool fullScreen);
 	
 		static Window* createWindow(int width, int height, const char* title, bool fullScreenMode=false);
 		static void freeWindow(Window* window);
