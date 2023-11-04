@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Window.h"
+#include "./include/Window.h"
 #include "./include/InputManager.h"
 
 namespace MinecraftClone
@@ -21,6 +21,19 @@ namespace MinecraftClone
 			glfwSetWindowShouldClose(nativeWindow, GLFW_TRUE);
 		}
 	}
+
+  bool Window::isFullScreen(){
+    return glfwGetWindowMonitor(nativeWindow) != nullptr;
+  }
+
+  void Window::setFullScreen(bool fullScreen){
+    if(fullScreen){
+      const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+      glfwSetWindowMonitor(this->nativeWindow, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
+    } else {
+      glfwSetWindowMonitor(this->nativeWindow, nullptr, 100, 100, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
+    }
+  }
 
 	Window* Window::createWindow(int width, int height, const char* title, bool fullScreenMode)
 	{

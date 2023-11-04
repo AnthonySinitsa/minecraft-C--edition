@@ -12,17 +12,17 @@ const int windowHeight = 1080;
 const char* windowTitle = "Minecraft Clone";
 
 // Define testWindowCreation function
-void testWindowCreation(Window& window) {
-    if (Input::isKeyPressed(GLFW_KEY_F1)) {
+void testWindowCreation(MinecraftClone::Window& window) {
+    if (isKeyDown(GLFW_KEY_F1)) {
         bool isFullScreen = window.isFullScreen();
         window.setFullScreen(!isFullScreen); // Toggle fullscreen
     }
 
-    if (Input::mousePosition.x > 50) {
+    if (mouseX > 50) {
         std::cout << "Mouse position is greater than 50." << std::endl;
     }
 
-    if (Input::isKeyPressed(GLFW_KEY_ESCAPE)) {
+    if (isKeyDown(GLFW_KEY_ESCAPE)) {
         window.close();
     }
 }
@@ -40,7 +40,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Use your custom Window class to create a window
-    MinecraftClone::Window* myWindow = Window::createWindow(windowWidth, windowHeight, windowTitle);
+    MinecraftClone::Window* myWindow = MinecraftClone::Window::createWindow(windowWidth, windowHeight, windowTitle);
     if (!myWindow) {
         std::cerr << "Failed to create window using Window class" << std::endl;
         glfwTerminate();
@@ -53,7 +53,7 @@ int main() {
     // Load all OpenGL function pointers using GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
-        Window::freeWindow(myWindow);
+        MinecraftClone::Window::freeWindow(myWindow);
         glfwTerminate();
         return -1;
     }
@@ -75,13 +75,13 @@ int main() {
 
         // Swap front and back buffers
         glfwSwapBuffers(myWindow->nativeWindow);
-        
+
         // Poll for and process events
         glfwPollEvents();
     }
 
     // Clean up
-    Window::freeWindow(myWindow);
+    MinecraftClone::Window::freeWindow(myWindow);
     glfwTerminate();
     return 0;
 }
