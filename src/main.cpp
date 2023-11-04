@@ -10,6 +10,22 @@ const int windowWidth = 1920;
 const int windowHeight = 1080;
 const char* windowTitle = "Minecraft Clone";
 
+// Define testWindowCreation function
+void testWindowCreation(Window& window) {
+    if (Input::isKeyPressed(GLFW_KEY_F1)) {
+        bool isFullScreen = window.isFullScreen();
+        window.setFullScreen(!isFullScreen); // Toggle fullscreen
+    }
+
+    if (Input::mousePosition.x > 50) {
+        std::cout << "Mouse position is greater than 50." << std::endl;
+    }
+
+    if (Input::isKeyPressed(GLFW_KEY_ESCAPE)) {
+        window.close();
+    }
+}
+
 int main() {
     // Initialize GLFW
     if (!glfwInit()) {
