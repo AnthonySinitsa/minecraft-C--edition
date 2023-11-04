@@ -1,8 +1,8 @@
 #include <iostream>
-#include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "InputManager.h"
+#include <glad/glad.h>
 
 using namespace MinecraftClone::Input;
 
@@ -22,7 +22,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Minecraft Clone", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1920, 1080, "Minecraft Clone", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -41,7 +41,7 @@ int main() {
     }
 
     // Set the viewport
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, 1920, 1080);
 
     glfwSetKeyCallback(window, keyCallback);
     glfwSetCursorPosCallback(window, mouseCallback);
@@ -52,7 +52,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         // Clear buffer
         glClearColor(0.98f, 0.47f, 0.43f, 1.0f); // Soft red color
-        glClear(Gl_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
 
         // Handle key press
