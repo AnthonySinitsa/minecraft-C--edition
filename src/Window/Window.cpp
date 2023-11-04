@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Window.h"
 #include "./include/InputManager.h"
 
@@ -33,7 +34,7 @@ namespace MinecraftClone
 		res->nativeWindow = glfwCreateWindow(width, height, title, primaryMonitor, nullptr);
 		if (res->nativeWindow == nullptr)
 		{
-			printf("Failed to create GLFW window\n");
+			std::cout << "Failed to create GLFW window\n" << std::endl;
 			glfwTerminate();
 			return nullptr;
 		}

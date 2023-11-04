@@ -1,8 +1,9 @@
 #include <iostream>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include "InputManager.h"
 #include <glad/glad.h>
+#include "Window.h"
+#include "InputManager.h"
 
 using namespace MinecraftClone::Input;
 
@@ -38,62 +39,49 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(1920, 1080, "Minecraft Clone", NULL, NULL);
-    if (!window) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+    // Use your custom Window class to create a window
+    MinecraftClone::Window* myWindow = Window::createWindow(windowWidth, windowHeight, windowTitle);
+    if (!myWindow) {
+        std::cerr << "Failed to create window using Window class" << std::endl;
         glfwTerminate();
         return -1;
     }
 
     // Make the window's context current
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(myWindow->nativeWindow);
 
     // Load all OpenGL function pointers using GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
-        glfwDestroyWindow(window);
+        Window::freeWindow(myWindow);
         glfwTerminate();
         return -1;
     }
 
     // Set the viewport
-    glViewport(0, 0, 1920, 1080);
+    glViewport(0, 0, windowWidth, windowHeight);
 
-    glfwSetKeyCallback(window, keyCallback);
-    glfwSetCursorPosCallback(window, mouseCallback);
-    glfwSetMouseButtonCallback(window, mouseButtonCallback);
-    glfwSetScrollCallback(window, mouseScrollCallback);
+    // Install callbacks using your Window class
+    myWindow->installMainCallbacks();
 
     // Main loop
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(myWindow->nativeWindow)) {
         // Clear buffer
         glClearColor(0.98f, 0.47f, 0.43f, 1.0f); // Soft red color
         glClear(GL_COLOR_BUFFER_BIT);
 
-
-        // Handle key press
-        if (isKeyDown(GLFW_KEY_E)) {
-            std::cout << "Key E is being pressed." << std::endl;
-            // Additional handling for W key press
-        }
-
-        // Check mouse position
-        if (mouseX >= windowWidth / 2.0f){
-            std::cout << "Mouse is at right part of window." << std::endl;
-        }
-
-        // Check for escape key to close window
-        if (isKeyDown(GLFW_KEY_ESCAPE)){
-            glfwSetWindowShouldClose(window, GLFW_TRUE);
-        }
+        // Call your test function with the instance of the Window class
+        testWindowCreation(*myWindow);
 
         // Swap front and back buffers
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(myWindow->nativeWindow);
+        
         // Poll for and process events
         glfwPollEvents();
     }
 
-    glfwDestroyWindow(window);
-    glfwTerminate(); // Clean up and close the application
+    // Clean up
+    Window::freeWindow(myWindow);
+    glfwTerminate();
     return 0;
 }
