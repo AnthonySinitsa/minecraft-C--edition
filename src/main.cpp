@@ -34,11 +34,6 @@ int main() {
         return -1;
     }
 
-    // // Create a windowed mode window and its OpenGL context
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     // Use your custom Window class to create a window
     MinecraftClone::Window* myWindow = MinecraftClone::Window::createWindow(windowWidth, windowHeight, windowTitle);
     if (!myWindow) {
