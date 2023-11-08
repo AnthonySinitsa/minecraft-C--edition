@@ -29,6 +29,11 @@ namespace MinecraftClone
   void Window::setFullScreen(bool fullScreen){
     if(fullScreen){
       const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+			// Store the window size and position so we can restore later
+			glfwGetWindowPos(nativeWindow, &windowPosX, &windowPosY);
+			glfwGetWindowSize(nativeWindow, &windowWidth, &windowHeight);
+			
       glfwSetWindowMonitor(this->nativeWindow, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
     } else {
       glfwSetWindowMonitor(this->nativeWindow, nullptr, 100, 100, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
