@@ -9,6 +9,13 @@ namespace MinecraftClone
 		GLFWwindow* nativeWindow;
 		int windowWidth;
 		int windowHeight;
+		int windowPosX;
+		int windowPosY;
+
+		// Constructor to initialize the members
+		Window(int width, int height, GLFWwindow* window)
+				: windowWidth(width), windowHeight(height), nativeWindow(window),
+					windowPosX(100), windowPosY(100) {} // Initialize with default values
 
 		void installMainCallbacks();
 
