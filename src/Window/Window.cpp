@@ -46,8 +46,15 @@ namespace MinecraftClone
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+		GLFWwindow* newWindow = glfwCreateWindow(width, height, title, fullScreenMode ? glfwGetPrimaryMonitor() : nullptr, nullptr);
+    if (newWindow == nullptr) {
+			std::cout << "Failed to create GLFW window\n" << std::endl;
+			glfwTerminate();
+			return nullptr;
+    }
+
 		// Only supply the monitor if we want to start the window in full-screen mode
-		Window* res = new Window();
+		Window* res = new Window(width, height, newWindow);
 		GLFWmonitor* primaryMonitor = fullScreenMode ? glfwGetPrimaryMonitor() : nullptr;
 		res->nativeWindow = glfwCreateWindow(width, height, title, primaryMonitor, nullptr);
 		if (res->nativeWindow == nullptr)
