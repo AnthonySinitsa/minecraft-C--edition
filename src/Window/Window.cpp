@@ -31,12 +31,12 @@ namespace MinecraftClone
       const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
 			// Store the window size and position so we can restore later
-			glfwGetWindowPos(nativeWindow, &windowPosX, &windowPosY);
-			glfwGetWindowSize(nativeWindow, &windowWidth, &windowHeight);
+			glfwGetWindowPos(this->nativeWindow, &this->windowPosX, &this->windowPosY);
+			glfwGetWindowSize(this->nativeWindow, &this->windowWidth, &this->windowHeight);
 			
       glfwSetWindowMonitor(this->nativeWindow, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
     } else {
-      glfwSetWindowMonitor(this->nativeWindow, nullptr, 100, 100, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
+      glfwSetWindowMonitor(this->nativeWindow, nullptr, this->windowPosX, this->windowPosY, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
     }
   }
 
