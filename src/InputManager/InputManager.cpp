@@ -16,6 +16,9 @@ namespace MinecraftClone {
             if (key >= 0 && key < GLFW_KEY_LAST) {
                 keyPressedData[key] = action != GLFW_RELEASE;
             }
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS){
+                glfwSetWindowShouldClose(window, GLFW_TRUE);
+            }
         }
 
         void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
