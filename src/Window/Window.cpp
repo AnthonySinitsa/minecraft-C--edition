@@ -29,16 +29,17 @@ void Window::setFullScreen(bool fullScreen) {
 		std::cout << "Number of monitors detected: " << monitorCount << std::endl;
 
 		GLFWmonitor* targetMonitor = nullptr;
-		// Logic to select the correct monitor, possibly iterating over 'monitors'
-		// For now, just selecting the primary monitor
-		targetMonitor = glfwGetPrimaryMonitor();
 
-		// Add debug output to log monitor details
+		// Example: Selecting a monitor by index
+		int targetMonitorIndex = 0; // Change this to select a different monitor
+		if (targetMonitorIndex >= 0 && targetMonitorIndex < monitorCount) {
+			targetMonitor = monitors[targetMonitorIndex];
+		}
+
 		if (targetMonitor) {
 			const GLFWvidmode* mode = glfwGetVideoMode(targetMonitor);
 			std::cout << "Using monitor: " << glfwGetMonitorName(targetMonitor) << std::endl;
 			std::cout << "Resolution: " << mode->width << "x" << mode->height << std::endl;
-			// Additional details can be logged here if needed
 
 			// Store the window size and position so we can restore later
 			glfwGetWindowPos(this->nativeWindow, &this->windowPosX, &this->windowPosY);
