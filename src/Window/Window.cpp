@@ -21,19 +21,31 @@ namespace MinecraftClone {
     return glfwGetWindowMonitor(nativeWindow) != nullptr;
   }
 
-  void Window::setFullScreen(bool fullScreen){
-    if(fullScreen){
-      const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+void Window::setFullScreen(bool fullScreen) {
+	if (fullScreen) {
+		int monitorCount;
+		GLFWmonitor** monitors = glfwGetMonitors(&monitorCount);
 
-			// Store the window size and position so we can restore later
-			glfwGetWindowPos(this->nativeWindow, &this->windowPosX, &this->windowPosY);
-			glfwGetWindowSize(this->nativeWindow, &this->windowWidth, &this->windowHeight);
-			
-      glfwSetWindowMonitor(this->nativeWindow, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
-    } else {
-      glfwSetWindowMonitor(this->nativeWindow, nullptr, this->windowPosX, this->windowPosY, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
-    }
-  }
+		// Select a monitor: Here we choose the primary monitor for simplicity.
+		// You can modify the logic to choose a different monitor.
+		GLFWmonitor* targetMonitor = glfwGetPrimaryMonitor();
+
+		// You can also select by index, for example, to choose the second monitor (if available):
+		// if (monitorCount >= 2) {
+		//     targetMonitor = monitors[1]; // second monitor
+		// }
+
+		const GLFWvidmode* mode = glfwGetVideoMode(targetMonitor);
+
+		// Store the window size and position so we can restore later
+		glfwGetWindowPos(this->nativeWindow, &this->windowPosX, &this->windowPosY);
+		glfwGetWindowSize(this->nativeWindow, &this->windowWidth, &this->windowHeight);
+
+		glfwSetWindowMonitor(this->nativeWindow, targetMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+	} else {
+		glfwSetWindowMonitor(this->nativeWindow, nullptr, this->windowPosX, this->windowPosY, this->windowWidth, this->windowHeight, GLFW_DONT_CARE);
+	}
+}
 
 	Window* Window::createWindow(int width, int height, const char* title, bool fullScreenMode) {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
