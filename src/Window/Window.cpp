@@ -2,22 +2,17 @@
 #include "Window.h"
 #include "InputManager.h"
 
-namespace MinecraftClone
-{
-	void Window::installMainCallbacks()
-	{
-		if (nativeWindow != nullptr)
-		{
+namespace MinecraftClone {
+	void Window::installMainCallbacks() {
+		if (nativeWindow != nullptr) {
 			glfwSetKeyCallback(nativeWindow, Input::keyCallback);
 			glfwSetCursorPosCallback(nativeWindow, Input::mouseCallback);
 			glfwSetMouseButtonCallback(nativeWindow, Input::mouseButtonCallback);
 		}
 	}
 
-	void Window::close()
-	{
-		if (nativeWindow != nullptr)
-		{
+	void Window::close() {
+		if (nativeWindow != nullptr) {
 			glfwSetWindowShouldClose(nativeWindow, GLFW_TRUE);
 		}
 	}
@@ -40,12 +35,12 @@ namespace MinecraftClone
     }
   }
 
-	Window* Window::createWindow(int width, int height, const char* title, bool fullScreenMode)
-	{
+	Window* Window::createWindow(int width, int height, const char* title, bool fullScreenMode) {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+		GLFWmonitor* primaryMonitor = fullScreenMode ? glfwGetPrimaryMonitor() : nullptr;
 		GLFWwindow* newWindow = glfwCreateWindow(width, height, title, fullScreenMode ? glfwGetPrimaryMonitor() : nullptr, nullptr);
     if (newWindow == nullptr) {
 			std::cout << "Failed to create GLFW window\n" << std::endl;
@@ -55,23 +50,14 @@ namespace MinecraftClone
 
 		// Only supply the monitor if we want to start the window in full-screen mode
 		Window* res = new Window(width, height, newWindow);
-		GLFWmonitor* primaryMonitor = fullScreenMode ? glfwGetPrimaryMonitor() : nullptr;
 
-		if (res->nativeWindow == nullptr)
-		{
-			std::cout << "Failed to create GLFW window\n" << std::endl;
-			glfwTerminate();
-			return nullptr;
-		}
 		glfwMakeContextCurrent(res->nativeWindow);
 
 		return res;
 	}
 
-	void Window::freeWindow(Window* window)
-	{
-		if (window)
-		{
+	void Window::freeWindow(Window* window) {
+		if (window) {
 			glfwDestroyWindow(window->nativeWindow);
 			delete window;
 		}
