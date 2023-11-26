@@ -23,7 +23,7 @@ void testWindowCreation(MinecraftClone::Window& window) {
     }
 
     if (mouseX > 50) {
-        // std::cout << "Mouse position is greater than 50." << std::endl;
+        std::cout << "Mouse position is greater than 50." << std::endl;
     }
 
     if (isKeyDown(GLFW_KEY_ESCAPE)) {
