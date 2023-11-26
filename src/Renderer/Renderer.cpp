@@ -5,7 +5,7 @@
 namespace MinecraftClone {
 
     Renderer::Renderer()
-        : shader("assets/shaders/vertex_shader.glsl", "assets/shaders/fragment_shader.glsl"),
+        : shader("assets/shaders/vertex_shader.shader", "assets/shaders/fragment_shader.shader"),
           VAO(0) {
         initRenderData();
     }
