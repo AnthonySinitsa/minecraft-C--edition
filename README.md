@@ -50,3 +50,13 @@ void testWindowCreation(Window& window){
 ```
 
 ## Goal 2
+
+1. Draw a square on the scren using glDrawArrays
+
+2. Draw a square on the screen using glDrawElements
+
+3. Draw a star using glDrawElements
+
+4. Draw the outline of a square using the GL_LINES primitive
+
+5. Repeat challenge 3, but use the named buffer technique
